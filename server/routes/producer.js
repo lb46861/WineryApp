@@ -6,22 +6,22 @@ const producerController = require('../controllers/producer');
 
 router
   .route('/')
-  .post(callbackErrorHandler(producerController.createProducer));
+  .post(callbackErrorHandler(producerController.create));
 
 router
   .route('/')
   .get(
-    callbackErrorHandler(producerController.getAllProducers)
+    callbackErrorHandler(producerController.getAll)
   );
 
 router
   .route('/:id')
   .get(
-    callbackErrorHandler(producerController.getProducer)
+    callbackErrorHandler(producerController.getOne)
   )
   .put(
-    callbackErrorHandler(producerController.updateProducer)
+    callbackErrorHandler(producerController.update)
   )
-  .delete(callbackErrorHandler(producerController.deleteProducer));
+  .delete(callbackErrorHandler(producerController.delete));
 
 module.exports = router;
