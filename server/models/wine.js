@@ -22,7 +22,7 @@ const wineSchema = new Schema({
     type: String,
     required: true
   },
-  producer: { type: Schema.Types.ObjectId, ref: 'producer' }
+  producer: { type: Schema.Types.ObjectId, ref: 'Producer' }
 });
 
 const Wine = mongoose.model('Wine', wineSchema, 'wine');
