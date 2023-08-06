@@ -38,7 +38,7 @@ module.exports.errorMiddleware = async (error, _req, res, _next) => {
   } else if (error.name === 'MongoServerError') {
     let details = error.message;
     if (error.code === 11000) {
-      details = 'User with this username or email already exists!';
+      details = 'Name or email of model must be unique';
     };
     // Handle Mongoose validation errors
     return res

@@ -20,7 +20,7 @@ const producerSchema = new Schema({
     type: String,
     required: true
   },
-  logoUrl: {
+  url: {
     type: String,
     required: true
   }
