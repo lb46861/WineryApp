@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Wine = require('./wine');
+const { errors } = require('../utils/errors');
+const responseMessages = require('../utils/response-message');
 
 const producerSchema = new Schema({
   name: {
@@ -26,10 +28,16 @@ const producerSchema = new Schema({
   }
 });
 
-producerSchema.pre('remove', async function (next) {
-  const wines = await Wine.find({ producer: this._id });
-  if (wines.length > 0) {
-    next(new Error('Cannot delete producer with associated wines'));
+producerSchema.pre('findOneAndDelete', async function (next) {
+  const query = this.getQuery();
+  const producer = await Producer.findOne(query);
+  if (producer) {
+    const wines = await Wine.find({ producer: producer._id });
+    if (wines.length > 0) {
+      throw errors.CONFLICT(responseMessages.ASSOCIATED_TABLE);
+    } else {
+      next();
+    }
   } else {
     next();
   }

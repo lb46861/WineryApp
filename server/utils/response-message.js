@@ -13,7 +13,8 @@ const responseMessages = {
   DELETE_SUCCESS: (modelName) => `${formatModelName(modelName)} successfully deleted!`,
   NOT_FOUND: (modelName) => `${formatModelName(modelName)} not found!`,
 
-  INVALID_CREDENTIALS: 'Invalid username or password!'
+  INVALID_CREDENTIALS: 'Invalid username or password!',
+  ASSOCIATED_TABLE: 'You cannot delete this model, it is associated with other models.'
 };
 
 module.exports = responseMessages;

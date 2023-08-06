@@ -24,7 +24,6 @@ module.exports.delete = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  const user = await generalController.createModel(req, Producer);
-
-  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), user });
+  const producer = await generalController.createModel(req, Producer);
+  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), producer });
 };

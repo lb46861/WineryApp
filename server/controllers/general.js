@@ -4,7 +4,6 @@ const responseMessages = require('../utils/response-message');
 // Create model
 exports.createModel = async (req, Model) => {
   const model = new Model(req.body);
-
   await model.save();
   return model;
 };
@@ -18,7 +17,7 @@ exports.getAllModels = async (Model) => {
 // Get model by ID
 exports.getModelById = async (req, Model) => {
   const id = req.params.id;
-  const model = await Model.findById(id);
+  const model = await Model.findById(id).populate('producer');
   if (!model) throw errors.NOT_FOUND(responseMessages.NOT_FOUND(Model.collection.collectionName));
   return model;
 };
