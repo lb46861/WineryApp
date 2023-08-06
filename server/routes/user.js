@@ -7,18 +7,18 @@ const userController = require('../controllers/user');
 router
   .route('/')
   .get(
-    callbackErrorHandler(userController.getAllUsers)
+    callbackErrorHandler(userController.getAll)
   );
 
 router
   .route('/:id')
   .get(
-    callbackErrorHandler(userController.getUser)
+    callbackErrorHandler(userController.getOne)
   )
   .put(
-    callbackErrorHandler(userController.updateUser)
+    callbackErrorHandler(userController.update)
   )
-  .delete(callbackErrorHandler(userController.deleteUser));
+  .delete(callbackErrorHandler(userController.delete));
 
 router
   .route('/register')

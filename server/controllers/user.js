@@ -4,22 +4,22 @@ const User = require('../models/user');
 const collectionName = User.collection.collectionName;
 const responseMessages = require('../utils/response-message');
 
-module.exports.getAllUsers = async (_req, res) => {
+module.exports.getAll = async (_req, res) => {
   const users = await generalController.getAllModels(User);
   res.json({ users });
 };
 
-module.exports.getUser = async (req, res) => {
+module.exports.getOne = async (req, res) => {
   const user = await generalController.getModelById(req, User);
   res.json({ user });
 };
 
-module.exports.updateUser = async (req, res) => {
+module.exports.update = async (req, res) => {
   await generalController.updateModelById(req, User);
   res.json({ message: responseMessages.UPDATE_SUCCESS(collectionName) });
 };
 
-module.exports.deleteUser = async (req, res) => {
+module.exports.delete = async (req, res) => {
   const user = await generalController.deleteModelById(req, User);
   res.json({ message: responseMessages.DELETE_SUCCESS(collectionName), user });
 };
