@@ -1,6 +1,6 @@
-const { errors } = require('../utils/errors');
-const responseMessages = require('../utils/response-message');
 const jwt = require('jsonwebtoken');
+const responseMessages = require('../utils/response-message');
+const { errors } = require('../utils/errors');
 const { roles } = require('../utils/constants');
 
 exports.authenticateUser = async (req, _res, next) => {
