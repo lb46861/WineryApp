@@ -3,7 +3,19 @@ const router = express.Router();
 const { callbackErrorHandler } = require('../middleware/error-handler');
 
 const userController = require('../controllers/user');
+const { authenticateUser, restrictAdminRoutes } = require('../middleware/authentication');
 
+router
+  .route('/register')
+  .post(callbackErrorHandler(userController.register));
+
+router
+  .route('/login')
+  .post(callbackErrorHandler(userController.login));
+
+// administrator routes
+router.use(callbackErrorHandler(authenticateUser));
+router.use(callbackErrorHandler(restrictAdminRoutes));
 router
   .route('/')
   .get(
@@ -19,13 +31,5 @@ router
     callbackErrorHandler(userController.update)
   )
   .delete(callbackErrorHandler(userController.delete));
-
-router
-  .route('/register')
-  .post(callbackErrorHandler(userController.register));
-
-router
-  .route('/login')
-  .post(callbackErrorHandler(userController.login));
 
 module.exports = router;

@@ -10,14 +10,14 @@ exports.createModel = async (req, Model) => {
 
 // Get all models
 exports.getAllModels = async (Model) => {
-  const models = await Model.find();
+  const models = await Model.find().sort({ name: 1 });
   return models;
 };
 
 // Get model by ID
 exports.getModelById = async (req, Model) => {
   const id = req.params.id;
-  const model = await Model.findById(id).populate('producer');
+  const model = await Model.findById(id);
   if (!model) throw errors.NOT_FOUND(responseMessages.NOT_FOUND(Model.collection.collectionName));
   return model;
 };

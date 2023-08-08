@@ -14,7 +14,11 @@ const responseMessages = {
   NOT_FOUND: (modelName) => `${formatModelName(modelName)} not found!`,
 
   INVALID_CREDENTIALS: 'Invalid username or password!',
-  ASSOCIATED_TABLE: 'You cannot delete this model, it is associated with other models.'
+  ASSOCIATED_TABLE: 'You cannot delete this model, it is associated with other models.',
+  MISSING_AUTHORIZATION: 'You must be logged in to perform this action.',
+  INVALID_TOKEN: 'Please login again, your session has timed out.',
+  FORBIDDEN: 'You do not have permission for this action.',
+  INTERNAL_ERROR: 'Something went wrong...'
 };
 
 module.exports = responseMessages;
