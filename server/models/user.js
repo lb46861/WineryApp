@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bcrypt = require('bcrypt');
+const { roles } = require('../utils/constants');
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
@@ -28,7 +29,7 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    default: 'user'
+    default: roles.customer
   }
 });
 

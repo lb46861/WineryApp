@@ -26,7 +26,6 @@ module.exports.delete = async (req, res) => {
 
 module.exports.register = async (req, res) => {
   const user = await generalController.createModel(req, User);
-
   res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), user });
 };
 

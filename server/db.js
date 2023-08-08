@@ -15,7 +15,7 @@ async function reachClientDb () {
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT);
+  console.log(`Application started, running on port http://localhost:${process.env.PORT} ...`);
 }
 
-console.log(`Application started, running on port http://localhost:${process.env.PORT} ...`);
 reachClientDb();
