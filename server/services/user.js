@@ -39,6 +39,5 @@ exports.login = async (req) => {
   }
 
   const token = createToken(user);
-
-  return [token, user.role];
+  return token;
 };

@@ -30,6 +30,6 @@ module.exports.register = async (req, res) => {
 };
 
 module.exports.login = async (req, res) => {
-  const [token, role] = await userService.login(req);
-  res.json({ token, role });
+  const token = await userService.login(req);
+  res.json({ token });
 };
