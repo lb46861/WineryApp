@@ -46,7 +46,7 @@ function Home() {
       />
       <Grid container spacing={2}>
         {paginatedWines.map(wine => (
-          <Grid item key={wine.id} xs={12} sm={6} md={4}>
+          <Grid item key={wine._id} xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
                 <Typography variant="h5" component="div">
