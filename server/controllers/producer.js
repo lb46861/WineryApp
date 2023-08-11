@@ -4,13 +4,13 @@ const collectionName = Producer.collection.collectionName;
 const responseMessages = require('../utils/response-message');
 
 module.exports.getAll = async (_req, res) => {
-  const users = await generalController.getAllModels(Producer);
-  res.json({ users });
+  const data = await generalController.getAllModels(Producer);
+  res.json({ data });
 };
 
 module.exports.getOne = async (req, res) => {
-  const producer = await generalController.getModelById(req, Producer);
-  res.json({ producer });
+  const data = await generalController.getModelById(req, Producer);
+  res.json({ data });
 };
 
 module.exports.update = async (req, res) => {
@@ -19,11 +19,11 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.delete = async (req, res) => {
-  const producer = await generalController.deleteModelById(req, Producer);
-  res.json({ message: responseMessages.DELETE_SUCCESS(collectionName), producer });
+  const data = await generalController.deleteModelById(req, Producer);
+  res.json({ message: responseMessages.DELETE_SUCCESS(collectionName), data });
 };
 
 module.exports.create = async (req, res) => {
-  const producer = await generalController.createModel(req, Producer);
-  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), producer });
+  const data = await generalController.createModel(req, Producer);
+  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), data });
 };

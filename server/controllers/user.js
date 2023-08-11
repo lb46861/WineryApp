@@ -5,13 +5,13 @@ const collectionName = User.collection.collectionName;
 const responseMessages = require('../utils/response-message');
 
 module.exports.getAll = async (_req, res) => {
-  const users = await generalController.getAllModels(User);
-  res.json({ users });
+  const data = await generalController.getAllModels(User);
+  res.json({ data });
 };
 
 module.exports.getOne = async (req, res) => {
-  const user = await generalController.getModelById(req, User);
-  res.json({ user });
+  const data = await generalController.getModelById(req, User);
+  res.json({ data });
 };
 
 module.exports.update = async (req, res) => {
@@ -20,13 +20,13 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.delete = async (req, res) => {
-  const user = await generalController.deleteModelById(req, User);
-  res.json({ message: responseMessages.DELETE_SUCCESS(collectionName), user });
+  const data = await generalController.deleteModelById(req, User);
+  res.json({ message: responseMessages.DELETE_SUCCESS(collectionName), data });
 };
 
 module.exports.register = async (req, res) => {
-  const user = await generalController.createModel(req, User);
-  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), user });
+  const data = await generalController.createModel(req, User);
+  res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), data });
 };
 
 module.exports.login = async (req, res) => {
