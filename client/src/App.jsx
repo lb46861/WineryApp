@@ -7,10 +7,11 @@ import Navbar from './component/Navbar';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import WineCreation from "./pages/WineCreation";
 
 import {
   HOME_PATH,
-  LOGIN_PATH, REGISTRATION_PATH
+  LOGIN_PATH, REGISTRATION_PATH, WINE_PATH
 } from "./utils/constants";
 
 const theme = createTheme({
@@ -32,6 +33,7 @@ function App() {
             <Route path={LOGIN_PATH} element={<Login />}></Route>
             <Route path={REGISTRATION_PATH} element={<Register />}></Route>
             <Route path={HOME_PATH} element={<Home />} />
+            <Route path={WINE_PATH} element={<WineCreation />} />
           </Routes>
         </ApiProvider>
       </BrowserRouter>

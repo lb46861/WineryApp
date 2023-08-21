@@ -1,4 +1,5 @@
 const generalController = require('./general');
+const wineService = require('../services/wine');
 const Wine = require('../models/wine');
 const collectionName = Wine.collection.collectionName;
 const responseMessages = require('../utils/response-message');
@@ -14,7 +15,7 @@ module.exports.getOne = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-  await generalController.updateModelById(req, Wine);
+  await wineService.updateWine(req);
   res.json({ message: responseMessages.UPDATE_SUCCESS(collectionName) });
 };
 
@@ -24,6 +25,6 @@ module.exports.delete = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  const data = await generalController.createModel(req, Wine);
+  const data = await wineService.createWine(req);
   res.json({ message: responseMessages.CREATE_SUCCESS(collectionName), data });
 };

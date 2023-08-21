@@ -36,19 +36,56 @@ function Home() {
     page * ITEMS_PER_PAGE
   );
 
+
+
+  const generateBuffer = (wine) => {
+    const uint8Array = new Uint8Array(wine.image.data.data);
+    const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+    return base64String
+  }
+
+
   return (
     <>
-      <TextField
-        label="Search"
-        variant="outlined"
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
-      <Grid container spacing={2}>
+      <Grid container spacing={2}  style={{padding: "50px 10%"}}>
+        <Grid item xs={12}>
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+       </Grid>
         {paginatedWines.map(wine => (
-          <Grid item key={wine._id} xs={12} sm={6} md={4}>
-            <Card>
-              <CardContent>
+          <Grid item key={wine._id} xs={12} sm={3} md={2}>
+
+            <Card
+              sx={{
+                position: 'relative',
+                maxWidth: '100%',
+                minHeight: 400,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '00%',
+                  left: '10%',
+                  right: '10%',
+                  bottom: '10%',
+                  backgroundImage: `url(data:${wine.image.contentType};base64,${generateBuffer(wine)})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  backgroundSize: 'cover',
+                  opacity: 0.6,  
+                }}
+              />
+    
+              <CardContent sx={{ position: 'relative', zIndex: 1 }}>
                 <Typography variant="h5" component="div">
                   {wine.name}
                 </Typography>
@@ -56,18 +93,24 @@ function Home() {
                   Price: {wine.price} €
                 </Typography>
                 <Typography variant="h6" color="text.secondary">
-                    Alc./vol. {wine.alcoholPercentage}%
+                  Alc./vol. {wine.alcoholPercentage}%
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  More info
                 </Typography>
               </CardContent>
             </Card>
+
           </Grid>
         ))}
+      <Grid item xs={12}>
+        <Pagination
+          count={Math.ceil(filteredWines.length / ITEMS_PER_PAGE)}
+          page={page}
+          onChange={handlePageChange}
+        />
       </Grid>
-      <Pagination
-        count={Math.ceil(filteredWines.length / ITEMS_PER_PAGE)}
-        page={page}
-        onChange={handlePageChange}
-      />
+      </Grid>
     </>
   );
 }

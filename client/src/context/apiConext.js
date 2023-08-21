@@ -28,9 +28,10 @@ function ApiProvider({ children }) {
     }
 
 
-    const apiCall = async function (reqMethod, path, reqData) {
+    const apiCall = async function (reqMethod, path, reqData, contentType) {
         try {
             let headers = {}
+            if(contentType) headers['Content-Type']=contentType
             if (localStorage['jwt']) {
                 headers.authorization = localStorage['jwt']
             }

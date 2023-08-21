@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+
+const multer = require('multer');
+const upload = multer();
+
 const { callbackErrorHandler } = require('../middleware/error-handler');
 
 const wineController = require('../controllers/wine');
@@ -22,12 +26,12 @@ router
 router.use(callbackErrorHandler(restrictAdminRoutes));
 router
   .route('/')
-  .post(callbackErrorHandler(wineController.create));
+  .post(upload.single('image'), callbackErrorHandler(wineController.create));
 
 router
   .route('/:id')
   .put(
-    callbackErrorHandler(wineController.update)
+    upload.single('image'), callbackErrorHandler(wineController.update)
   )
   .delete(callbackErrorHandler(wineController.delete));
 

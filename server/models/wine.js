@@ -15,6 +15,10 @@ const wineSchema = new Schema({
     type: Number,
     required: true
   },
+  liters: {
+    type: String,
+    required: true
+  },
   color: {
     type: String,
     required: true
@@ -22,6 +26,10 @@ const wineSchema = new Schema({
   type: {
     type: String,
     required: true
+  },
+  image: {
+    data: Buffer,
+    contentType: String
   },
   producer: { type: Schema.Types.ObjectId, ref: 'Producer' }
 });
