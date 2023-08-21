@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Pagination from '@mui/material/Pagination';
-import { Card, CardContent, Grid, Typography, TextField } from '@mui/material';
+import { Card, CardContent, Grid, Typography, TextField, CircularProgress } from '@mui/material';
 import { ApiContext } from '../context/apiConext';
 import { WINE_PATH } from '../utils/constants';
 
@@ -56,7 +56,7 @@ function Home() {
           onChange={handleSearchChange}
         />
        </Grid>
-        {paginatedWines.map(wine => (
+        {wines?.length ? (paginatedWines.map(wine => (
           <Grid item key={wine._id} xs={12} sm={3} md={2}>
 
             <Card
@@ -102,7 +102,10 @@ function Home() {
             </Card>
 
           </Grid>
-        ))}
+        ))
+        )
+        : <CircularProgress />
+      }
       <Grid item xs={12}>
         <Pagination
           count={Math.ceil(filteredWines.length / ITEMS_PER_PAGE)}

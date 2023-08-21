@@ -9,7 +9,7 @@ import { ApiContext } from "../context/apiConext";
 import { useNavigate } from "react-router-dom";
 
 import { HOME_PATH, WINE_PATH, PRODUCER_PATH } from "../utils/constants";
-import { MenuItem, Select } from "@mui/material";
+import { CircularProgress, MenuItem, Select } from "@mui/material";
 
 const WineCreation = () => {
 
@@ -70,7 +70,7 @@ const WineCreation = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            {producers.length && (
+            {producers.length ? (
                 <Box
                     sx={{
                         marginTop: 8,
@@ -204,7 +204,9 @@ const WineCreation = () => {
                     </Button>
                 </Box>
             </Box>
-                )}
+                )
+            : <CircularProgress />
+            }
         </Container>
     );
 }
