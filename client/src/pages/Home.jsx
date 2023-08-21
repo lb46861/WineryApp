@@ -6,6 +6,7 @@ import { WINE_PATH } from '../utils/constants';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUserContext } from '../context/userContext';
+import PromptDialog from '../component/Dialog';
 
 
 const ITEMS_PER_PAGE = 25;
@@ -16,12 +17,24 @@ function Home() {
   const [wines, setWines] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedWine, setSelectedWine] = useState()
+
 
   useEffect(() => {
     apiContext.apiCall('get', WINE_PATH).then(response => {
       if(response?.data?.data) setWines(response.data.data);
     });
   }, [apiContext]);
+
+  const handleDeleteClick = (event) => {
+    event.preventDefault();
+    apiContext.apiCall('delete', `${WINE_PATH}/${selectedWine}`).then(() => {
+      const updatedWines = wines.filter(wine => wine._id !== selectedWine);
+      setWines(updatedWines);
+      handleClose()
+    });
+  }
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -42,7 +55,6 @@ function Home() {
   );
 
 
-
   const generateBuffer = (wine) => {
     const uint8Array = new Uint8Array(wine.image.data.data);
     const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
@@ -53,9 +65,15 @@ function Home() {
 
   }
 
-  const handleClickOpenDelete = () => {
-
+  const handleClickOpenDelete = (wineId) => {
+    setSelectedWine(wineId);
+    setOpenDelete(true);
   }
+
+  const handleClose = () => {
+    // setOpenUpdate(false);
+    setOpenDelete(false);
+  };
 
 
   return (
@@ -137,6 +155,15 @@ function Home() {
         )
         : <CircularProgress />
       }
+
+      <PromptDialog
+        open={openDelete}
+        onClose={handleClose}
+        title={'Delete Wine'}
+        body={'Are you sure you want delete this wine?'}
+        handleCancel={handleClose}
+        handleConfirm={handleDeleteClick}
+      />
       <Grid item xs={12}>
         <Pagination
           count={Math.ceil(filteredWines.length / ITEMS_PER_PAGE)}
