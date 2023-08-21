@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { Card, CardContent, Grid, Typography, TextField, CircularProgress } from '@mui/material';
-import { ApiContext } from '../context/apiConext';
+import { ApiContext } from '../context/apiContext';
 import { WINE_PATH } from '../utils/constants';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useUserContext } from '../context/userContext';
+
 
 const ITEMS_PER_PAGE = 25;
 
 function Home() {
   const apiContext = useContext(ApiContext);
+  const { user } = useUserContext();
   const [wines, setWines] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
@@ -42,6 +47,14 @@ function Home() {
     const uint8Array = new Uint8Array(wine.image.data.data);
     const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
     return base64String
+  }
+
+  const handleClickOpenUpdate = () => {
+
+  }
+
+  const handleClickOpenDelete = () => {
+
   }
 
 
@@ -98,6 +111,24 @@ function Home() {
                 <Typography variant="h6" color="text.secondary">
                   More info
                 </Typography>
+
+
+                
+                {
+                ((user) && (user.role ==='administrator')) &&
+                (
+                <Grid container justifyContent="space-between">
+                  <Grid item>
+                    <EditIcon sx={{cursor: 'pointer', fill: '#54626F'}} onClick={() => handleClickOpenUpdate(wine._id)}></EditIcon>
+                  </Grid>   
+
+                  <Grid item>
+                  <DeleteIcon  sx={{cursor: 'pointer', fill: '#EE4B2B'}} onClick={() => handleClickOpenDelete(wine._id)}></DeleteIcon>
+                  </Grid>
+                </Grid>
+                )
+                }
+
               </CardContent>
             </Card>
 

@@ -4,6 +4,9 @@ exports.HOME_PATH = "/";
 exports.WINE_PATH='/wine'
 exports.PRODUCER_PATH='/producer'
 
+exports.WINE_CREATION_PATH='/wine/create'
+exports.PRODUCER_CREATION_PATH='/producer/create'
+
 exports.BEARER = "Bearer";
 
 

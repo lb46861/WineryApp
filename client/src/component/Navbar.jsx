@@ -2,13 +2,15 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useUserContext } from '../context/userContext';
+
 
 import styles from '../css/Navbar.module.css';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { LOGIN_PATH, REGISTRATION_PATH } from '../utils/constants';
+import { HOME_PATH, LOGIN_PATH, PRODUCER_CREATION_PATH, REGISTRATION_PATH, WINE_CREATION_PATH } from '../utils/constants';
 
 
 import jwtDecode from 'jwt-decode';
@@ -17,7 +19,7 @@ import jwtDecode from 'jwt-decode';
 
 function Navbar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState()
+  const { user, setUser } = useUserContext();
 
   const handleLogoutClick = (e) => {
     e.preventDefault()
@@ -59,12 +61,12 @@ function Navbar() {
               (user.role ==='administrator')
                 ? (
                   <>
-                    <Button color='inherit' variant='text' component={Link} to={`/`}> Home</Button>
-                    <Button color='inherit' variant='text' component={Link} to={`/wine`}> Add Wine</Button>
-                    <Button color='inherit' variant='text' component={Link} to={`/producer`}> Add Producer</Button>
+                    <Button color='inherit' variant='text' component={Link} to={HOME_PATH}> Home</Button>
+                    <Button color='inherit' variant='text' component={Link} to={WINE_CREATION_PATH}> Add Wine</Button>
+                    <Button color='inherit' variant='text' component={Link} to={PRODUCER_CREATION_PATH}> Add Producer</Button>
                   </>
                 )
-                : <Button color='inherit' variant='text' component={Link} to={`/`}> Home</Button>
+                : <Button color='inherit' variant='text' component={Link} to={HOME_PATH}> Home</Button>
             )
             }
           </Typography>

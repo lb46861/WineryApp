@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ApiContext } from '../context/apiConext';
+import { ApiContext } from '../context/apiContext';
 import { useLocation } from 'react-router-dom';
 import { Alert } from "@mui/material";
 
