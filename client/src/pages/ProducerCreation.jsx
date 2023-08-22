@@ -8,14 +8,11 @@ import Container from '@mui/material/Container';
 import { ApiContext } from "../context/ApiContext";
 import { useNavigate } from "react-router-dom";
 
-import { HOME_PATH, PRODUCER_PATH } from "../utils/constants";
+import { HOME_PATH, PRODUCER_PATH, countries } from "../utils/constants";
 import { MenuItem, Select } from "@mui/material";
 
 const ProducerCreation = () => {
 
-    
-    
-    const countries = ['HR', 'UK', 'BIH', 'ITA', 'GRE', 'SPA']
     const [formData, setFormData] = useState({
         country: countries[0]
     });
