@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ApiContext } from "../context/apiContext";
+import { ApiContext } from "../context/ApiContext";
 import { useNavigate } from "react-router-dom";
 
 import { HOME_PATH, WINE_PATH, PRODUCER_PATH } from "../utils/constants";

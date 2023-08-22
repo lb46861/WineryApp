@@ -2,7 +2,7 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useUserContext } from '../context/userContext';
+import { useUserContext } from '../context/UserContext';
 
 
 import styles from '../css/Navbar.module.css';
@@ -10,7 +10,7 @@ import styles from '../css/Navbar.module.css';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { HOME_PATH, LOGIN_PATH, PRODUCER_CREATION_PATH, REGISTRATION_PATH, WINE_CREATION_PATH } from '../utils/constants';
+import { HOME_PATH, LOGIN_PATH, PRODUCER_CREATION_PATH, PRODUCER_PATH, REGISTRATION_PATH, WINE_CREATION_PATH } from '../utils/constants';
 
 
 import jwtDecode from 'jwt-decode';
@@ -62,12 +62,19 @@ function Navbar() {
                 ? (
                   <>
                     <Button color='inherit' variant='text' component={Link} to={HOME_PATH}> Home</Button>
+                    <Button color='inherit' variant='text' component={Link} to={PRODUCER_PATH}> Producers</Button>
                     <Button color='inherit' variant='text' component={Link} to={WINE_CREATION_PATH}> Add Wine</Button>
                     <Button color='inherit' variant='text' component={Link} to={PRODUCER_CREATION_PATH}> Add Producer</Button>
                   </>
                 )
-                : <Button color='inherit' variant='text' component={Link} to={HOME_PATH}> Home</Button>
-            )
+                : 
+                (
+                  <>
+                    <Button color='inherit' variant='text' component={Link} to={HOME_PATH}> Home</Button>
+                    <Button color='inherit' variant='text' component={Link} to={PRODUCER_PATH}> Producers</Button>
+                  </>
+                )
+            ) 
             }
           </Typography>
           <Typography mr={10}>
