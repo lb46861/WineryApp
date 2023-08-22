@@ -11,3 +11,6 @@ exports.BEARER = "Bearer";
 
 
 exports.SERVER_ERROR = "Something went wrong...";
+
+exports.countries = ['HR', 'UK', 'BIH', 'ITA', 'GRE', 'SPA']
+

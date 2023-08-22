@@ -26,7 +26,7 @@ router
   .post(callbackErrorHandler(producerController.create));
 router
   .route('/:id')
-  .put(
+  .patch(
     callbackErrorHandler(producerController.update)
   )
   .delete(

@@ -2,21 +2,23 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ApiProvider } from './context/apiContext';
+import { ApiProvider } from './context/ApiContext';
 import Navbar from './component/Navbar';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import Producer from "./pages/Producer";
 import WineCreation from "./pages/WineCreation";
 import ProducerCreation from "./pages/ProducerCreation";
-import { UserProvider } from './context/userContext'
+import { UserProvider } from './context/UserContext'
 
 import {
   HOME_PATH,
   LOGIN_PATH, 
   REGISTRATION_PATH, 
   WINE_CREATION_PATH,
-  PRODUCER_CREATION_PATH
+  PRODUCER_CREATION_PATH,
+  PRODUCER_PATH
 } from "./utils/constants";
 
 
@@ -40,6 +42,7 @@ function App() {
             <Route path={LOGIN_PATH} element={<Login />}></Route>
             <Route path={REGISTRATION_PATH} element={<Register />}></Route>
             <Route path={HOME_PATH} element={<Home />} />
+            <Route path={PRODUCER_PATH} element={<Producer />} />
             <Route path={WINE_CREATION_PATH} element={<WineCreation />} />
             <Route path={PRODUCER_CREATION_PATH} element={<ProducerCreation />} />
           </Routes>

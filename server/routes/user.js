@@ -27,7 +27,7 @@ router
   .get(
     callbackErrorHandler(userController.getOne)
   )
-  .put(
+  .patch(
     callbackErrorHandler(userController.update)
   )
   .delete(callbackErrorHandler(userController.delete));

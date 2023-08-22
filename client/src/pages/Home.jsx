@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Pagination from '@mui/material/Pagination';
-import { Card, CardContent, Grid, Typography, TextField, CircularProgress } from '@mui/material';
-import { ApiContext } from '../context/apiContext';
-import { WINE_PATH } from '../utils/constants';
+import { Card, CardContent, Grid, Typography, TextField, CircularProgress, Box, Select, MenuItem } from '@mui/material';
+import { ApiContext } from '../context/ApiContext';
+import { PRODUCER_PATH, WINE_PATH } from '../utils/constants';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useUserContext } from '../context/userContext';
-import PromptDialog from '../component/Dialog';
+import PromptCrud from '../component/PromptCRUD';
+import { useUserContext } from '../context/UserContext';
 
 
 const ITEMS_PER_PAGE = 25;
@@ -15,23 +15,51 @@ function Home() {
   const apiContext = useContext(ApiContext);
   const { user } = useUserContext();
   const [wines, setWines] = useState([]);
+  const [producers, setProducers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false)
   const [selectedWine, setSelectedWine] = useState()
+  const [formData, setFormData] = useState('');
+  const divRef = useRef();
+  const [recall, setRecall] = useState(false);
+
 
 
   useEffect(() => {
+    apiContext.apiCall('get', PRODUCER_PATH).then(response => {
+      if(response?.data?.data) setProducers(response.data.data);
+    });
     apiContext.apiCall('get', WINE_PATH).then(response => {
       if(response?.data?.data) setWines(response.data.data);
     });
-  }, [apiContext]);
+  }, [apiContext, recall]);
 
-  const handleDeleteClick = (event) => {
+  const handleDeleteClick = async (event) => {
     event.preventDefault();
-    apiContext.apiCall('delete', `${WINE_PATH}/${selectedWine}`).then(() => {
+    await apiContext.apiCall('delete', `${WINE_PATH}/${selectedWine}`).then(() => {
       const updatedWines = wines.filter(wine => wine._id !== selectedWine);
       setWines(updatedWines);
+      handleClose()
+    });
+  }
+
+  const handleUpdateClick = async(event)=> {
+    event.preventDefault();
+    const data = new FormData(divRef.current);
+    const objectToUpdate = {
+      ...(data.get('name') && { name: data.get('name') }),
+      ...(data.get('price') && { price: data.get('price') }),
+      ...(data.get('alcoholPercentage') && { alcoholPercentage: data.get('alcoholPercentage') }),
+      ...(data.get('color') && { color: data.get('color') }),
+      ...(data.get('type') && { type: data.get('type') }),
+      ...(data.get('image') && { image: data.get('image') }),
+      ...(data.get('producer') && { producer: data.get('producer') })
+    };
+
+    await apiContext.apiCall('patch', `${WINE_PATH}/${selectedWine}`, objectToUpdate, 'multipart/form-data').then(() => {
+      setRecall(!recall);
       handleClose()
     });
   }
@@ -61,8 +89,10 @@ function Home() {
     return base64String
   }
 
-  const handleClickOpenUpdate = () => {
-
+  const handleClickOpenUpdate = (wine) => {
+    setFormData(wine);
+    setSelectedWine(wine._id);
+    setOpenUpdate(true);
   }
 
   const handleClickOpenDelete = (wineId) => {
@@ -71,7 +101,7 @@ function Home() {
   }
 
   const handleClose = () => {
-    // setOpenUpdate(false);
+    setOpenUpdate(false);
     setOpenDelete(false);
   };
 
@@ -137,7 +167,7 @@ function Home() {
                 (
                 <Grid container justifyContent="space-between">
                   <Grid item>
-                    <EditIcon sx={{cursor: 'pointer', fill: '#54626F'}} onClick={() => handleClickOpenUpdate(wine._id)}></EditIcon>
+                    <EditIcon sx={{cursor: 'pointer', fill: '#54626F'}} onClick={() => handleClickOpenUpdate(wine)}></EditIcon>
                   </Grid>   
 
                   <Grid item>
@@ -156,7 +186,7 @@ function Home() {
         : <CircularProgress />
       }
 
-      <PromptDialog
+      <PromptCrud
         open={openDelete}
         onClose={handleClose}
         title={'Delete Wine'}
@@ -164,6 +194,106 @@ function Home() {
         handleCancel={handleClose}
         handleConfirm={handleDeleteClick}
       />
+
+      <PromptCrud
+        open={openUpdate}
+        onClose={handleClose}
+        title={'Update Wine'}
+        body={
+          <Box component="form" ref={divRef} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              defaultValue={formData.name || ''}
+              id="name"
+              label="Name"
+              name="name"
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              defaultValue={formData.price || ''}
+              id="price"
+              label="Price €"
+              name="price"
+              type="number"
+              inputProps={{
+                  step: 0.01,
+              }}
+            />
+
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              defaultValue={formData.alcoholPercentage || ''}
+              id="alcoholPercentage"
+              label="Alcohol Percentage"
+              name="alcoholPercentage"
+              type="number"
+              inputProps={{
+                  step: 0.1,
+              }}
+            />
+
+          
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              defaultValue={formData.color || ''}
+              id="color"
+              label="Color"
+              name="color"
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              defaultValue={formData.type || ''}
+              id="type"
+              label="Type"
+              name="type"
+            />
+
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="image"
+              name="image"
+              type="file"
+            />
+
+            <Select
+              fullWidth
+              label="Select Producer"
+              required
+              defaultValue={formData.producer || ''}
+              name="producer"
+              >
+              {producers.map((producer) => (
+                  <MenuItem key={producer._id} value={producer._id}>
+                  {producer.name}
+                  </MenuItem>
+              ))}
+            </Select>
+
+
+          </Box>
+        }
+        handleCancel={handleClose}
+        handleConfirm={handleUpdateClick}
+      />
+
+
+      
       <Grid item xs={12}>
         <Pagination
           count={Math.ceil(filteredWines.length / ITEMS_PER_PAGE)}

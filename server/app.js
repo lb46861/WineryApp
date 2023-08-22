@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const router = require('./routes');
 const cors = require('cors');
+app.use(cors());
 const { errorMiddleware } = require('./middleware/error-handler');
 
 app.use(express.json());
-app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', router);

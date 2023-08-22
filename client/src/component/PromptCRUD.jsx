@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 
-export default function DeletePrompt({ open, title, body, onClose, handleCancel, handleConfirm }) {
+export default function PromptCrud({ open, title, body, onClose, handleCancel, handleConfirm }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
@@ -28,7 +28,7 @@ export default function DeletePrompt({ open, title, body, onClose, handleCancel,
   );
 }
 
-DeletePrompt.propTypes = {
+PromptCrud.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   body: PropTypes.any,

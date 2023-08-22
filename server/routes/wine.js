@@ -30,7 +30,7 @@ router
 
 router
   .route('/:id')
-  .put(
+  .patch(
     upload.single('image'), callbackErrorHandler(wineController.update)
   )
   .delete(callbackErrorHandler(wineController.delete));
