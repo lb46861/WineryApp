@@ -8,6 +8,7 @@ exports.WINE_CREATION_PATH='/wine/create'
 exports.PRODUCER_CREATION_PATH='/producer/create'
 
 exports.BEARER = "Bearer";
+exports.ADMINISTRATOR = "administrator"
 
 
 exports.SERVER_ERROR = "Something went wrong...";

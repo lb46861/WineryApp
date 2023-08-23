@@ -11,6 +11,8 @@ import Producer from "./pages/Producer";
 import WineCreation from "./pages/WineCreation";
 import ProducerCreation from "./pages/ProducerCreation";
 import { UserProvider } from './context/UserContext'
+import { withAuthentication } from './component/Authentication'; 
+
 
 import {
   HOME_PATH,
@@ -19,7 +21,8 @@ import {
   WINE_CREATION_PATH,
   PRODUCER_CREATION_PATH,
   PRODUCER_PATH,
-  WINE_PATH
+  WINE_PATH,
+  ADMINISTRATOR
 } from "./utils/constants";
 import WineDetails from "./pages/WineDetails";
 
@@ -30,6 +33,10 @@ const theme = createTheme({
   padding: 0,
   margin: 0
 });
+
+const AuthenticatedWineCreation = withAuthentication(WineCreation, [ADMINISTRATOR]);
+const AuthenticatedProducerCreation = withAuthentication(ProducerCreation, [ADMINISTRATOR]);
+
 
 
 function App() {
@@ -46,8 +53,9 @@ function App() {
             <Route path={HOME_PATH} element={<Home />} />
             <Route path={`${WINE_PATH}/:id`} element={<WineDetails />} />
             <Route path={PRODUCER_PATH} element={<Producer />} />
-            <Route path={WINE_CREATION_PATH} element={<WineCreation />} />
-            <Route path={PRODUCER_CREATION_PATH} element={<ProducerCreation />} />
+            <Route path={WINE_CREATION_PATH} element={<AuthenticatedWineCreation />} />
+            <Route path={PRODUCER_CREATION_PATH} element={<AuthenticatedProducerCreation />} />
+            <Route path="*" element={<Home/>} />
           </Routes>
         </ApiProvider>
         </UserProvider>
