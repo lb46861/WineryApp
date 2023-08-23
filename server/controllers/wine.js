@@ -5,12 +5,12 @@ const collectionName = Wine.collection.collectionName;
 const responseMessages = require('../utils/response-message');
 
 module.exports.getAll = async (_req, res) => {
-  const data = await generalController.getAllModels(Wine);
+  const data = await wineService.getAllWines(Wine);
   res.status(200).json({ data });
 };
 
 module.exports.getOne = async (req, res) => {
-  const data = await generalController.getModelById(req, Wine);
+  const data = await wineService.getWineById(req, Wine);
   res.status(200).json({ data });
 };
 

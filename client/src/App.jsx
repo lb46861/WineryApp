@@ -18,8 +18,10 @@ import {
   REGISTRATION_PATH, 
   WINE_CREATION_PATH,
   PRODUCER_CREATION_PATH,
-  PRODUCER_PATH
+  PRODUCER_PATH,
+  WINE_PATH
 } from "./utils/constants";
+import WineDetails from "./pages/WineDetails";
 
 
 const theme = createTheme({
@@ -42,6 +44,7 @@ function App() {
             <Route path={LOGIN_PATH} element={<Login />}></Route>
             <Route path={REGISTRATION_PATH} element={<Register />}></Route>
             <Route path={HOME_PATH} element={<Home />} />
+            <Route path={`${WINE_PATH}/:id`} element={<WineDetails />} />
             <Route path={PRODUCER_PATH} element={<Producer />} />
             <Route path={WINE_CREATION_PATH} element={<WineCreation />} />
             <Route path={PRODUCER_CREATION_PATH} element={<ProducerCreation />} />

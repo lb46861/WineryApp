@@ -157,7 +157,7 @@ function Home() {
                   Alc./vol. {wine.alcoholPercentage}%
                 </Typography>
                 <Typography variant="h6" color="text.secondary">
-                  More info
+                 <a href={`${WINE_PATH}/${wine._id}`}> More info</a>
                 </Typography>
 
 

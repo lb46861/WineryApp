@@ -34,9 +34,11 @@ function Producer() {
 
   const handleDeleteClick = async (event) => {
     event.preventDefault();
-    await apiContext.apiCall('delete', `${PRODUCER_PATH}/${selectedProducer}`).then(() => {
-      const updatedProducers = producers.filter(producer => producer._id !== selectedProducer);
-      setProducers(updatedProducers);
+    await apiContext.apiCall('delete', `${PRODUCER_PATH}/${selectedProducer}`).then((response) => {
+      if(response?.status === 200){
+        const updatedProducers = producers.filter(producer => producer._id !== selectedProducer);
+        setProducers(updatedProducers);
+      }
       handleClose()
     });
   }

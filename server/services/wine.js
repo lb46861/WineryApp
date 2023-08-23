@@ -1,4 +1,5 @@
 const Wine = require('../models/wine');
+const Producer = require('../models/producer');
 const { errors } = require('../utils/errors');
 const responseMessages = require('../utils/response-message');
 
@@ -40,4 +41,16 @@ exports.updateWine = async (req) => {
   if (!wine) {
     throw errors.NOT_FOUND(responseMessages.NOT_FOUND(Wine.collection.collectionName));
   }
+};
+
+exports.getAllWines = async () => {
+  const models = await Wine.find().populate('producer').sort({ 'producer.name': 1 });
+  return models;
+};
+
+exports.getWineById = async (req) => {
+  const id = req.params.id;
+  const wine = await Wine.findById(id).populate('producer');
+  if (!wine) throw errors.NOT_FOUND(responseMessages.NOT_FOUND(Wine.collection.collectionName));
+  return wine;
 };
