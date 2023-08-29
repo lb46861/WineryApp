@@ -104,7 +104,7 @@ function Home() {
     setOpenUpdate(false);
     setOpenDelete(false);
   };
-
+  
 
   return (
     <>
@@ -275,7 +275,7 @@ function Home() {
               fullWidth
               label="Select Producer"
               required
-              defaultValue={formData.producer || ''}
+              defaultValue={formData?.producer?._id || ''}
               name="producer"
               >
               {producers.map((producer) => (
