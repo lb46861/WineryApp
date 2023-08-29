@@ -31,7 +31,7 @@ function WineDetails() {
   return (
     wine ? (
         <Grid container spacing={2}  style={{padding: "50px 10%"}}>
-            <Grid item key={wine._id} xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6}>
             <Card
             sx={{
                 maxWidth: '100%',
