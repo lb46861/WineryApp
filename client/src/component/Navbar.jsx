@@ -3,30 +3,35 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useUserContext } from '../context/UserContext';
-
+import { useCartContext } from '../context/CartContext';
 
 import styles from '../css/Navbar.module.css';
 
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { HOME_PATH, LOGIN_PATH, PRODUCER_CREATION_PATH, PRODUCER_PATH, REGISTRATION_PATH, WINE_CREATION_PATH } from '../utils/constants';
-
+import { CART_PATH, HOME_PATH, LOGIN_PATH, PRODUCER_CREATION_PATH, PRODUCER_PATH, REGISTRATION_PATH, WINE_CREATION_PATH } from '../utils/constants';
 
 import jwtDecode from 'jwt-decode';
-
 
 
 function Navbar() {
   const navigate = useNavigate();
   const { user, setUser } = useUserContext();
+  const { setCart } = useCartContext();
 
-  const handleLogoutClick = (e) => {
-    e.preventDefault()
-    localStorage.removeItem('jwt')
+  const handleLogoutClick = async (e) => {
+    e.preventDefault();
+    
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('cart');
+  
+    setCart([]);
     setUser(null);
-    navigate(LOGIN_PATH)
-  }
+  
+    navigate(LOGIN_PATH);
+  };
+  
 
   useEffect(() => {
     if (localStorage['jwt']) {
@@ -79,7 +84,11 @@ function Navbar() {
           </Typography>
           <Typography mr={10}>
             {user
-              ? <Button onClick={handleLogoutClick} color='inherit' variant='outlined'>Logout</Button>
+              ? 
+              <>
+                <Button color='inherit' variant='text' component={Link} to={CART_PATH}> CART</Button>
+                <Button onClick={handleLogoutClick} color='inherit' variant='outlined'>Logout</Button>
+              </>
               : <>
               <Button color='inherit' variant='outlined' component={Link} to={LOGIN_PATH}>Login</Button> &nbsp;
               <Button color='inherit' variant='outlined' component={Link} to={REGISTRATION_PATH}>Register</Button>

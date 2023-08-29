@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import Pagination from '@mui/material/Pagination';
-import { Card, CardContent, Grid, Typography, TextField, CircularProgress, Box, Select, MenuItem } from '@mui/material';
+import { Card, CardContent, Grid, Typography, TextField, CircularProgress, Box, Select, MenuItem, Button } from '@mui/material';
 import { ApiContext } from '../context/ApiContext';
 import { PRODUCER_PATH, WINE_PATH } from '../utils/constants';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PromptCrud from '../component/PromptCRUD';
 import { useUserContext } from '../context/UserContext';
+import { useCartContext } from '../context/CartContext';
+import { successToast } from '../utils/ToastNotif'
+import { Link } from 'react-router-dom';
 
 
 const ITEMS_PER_PAGE = 25;
 
 function Home() {
   const apiContext = useContext(ApiContext);
-  const { user } = useUserContext();
+  const { user } = useUserContext();  const { addToCart } = useCartContext();
   const [wines, setWines] = useState([]);
   const [producers, setProducers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,8 +27,6 @@ function Home() {
   const [formData, setFormData] = useState('');
   const divRef = useRef();
   const [recall, setRecall] = useState(false);
-
-
 
   useEffect(() => {
     apiContext.apiCall('get', PRODUCER_PATH).then(response => {
@@ -69,7 +70,7 @@ function Home() {
     setPage(1);
   };
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (_event, value) => {
     setPage(value);
   };
 
@@ -104,6 +105,11 @@ function Home() {
     setOpenUpdate(false);
     setOpenDelete(false);
   };
+
+  const handleAddToCart = (wine) => {
+    successToast('Item successfully added to cart!')
+    addToCart(wine);
+  }
   
 
   return (
@@ -157,10 +163,17 @@ function Home() {
                   Alc./vol. {wine.alcoholPercentage}%
                 </Typography>
                 <Typography variant="h6" color="text.secondary">
-                 <a href={`${WINE_PATH}/${wine._id}`}> More info</a>
+                 <Link  to={`${WINE_PATH}/${wine._id}`}>More info</Link>
                 </Typography>
 
 
+                <Button 
+                  sx={{marginTop: 1, marginBottom: 3}} 
+                  variant="contained"
+                  onClick={() => handleAddToCart(wine)}
+                >
+                  Add to Cart
+                </Button>
                 
                 {
                 ((user) && (user.role ==='administrator')) &&
